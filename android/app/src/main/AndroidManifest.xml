@@ -27,4 +27,8 @@
         </intent-filter>
       </activity>
     </application>
+    <queries>
+        <package android:name="com.example.store" />
+        <package android:name="com.example.services" />
+    </queries>
 </manifest>

@@ -1,3 +1,4 @@
+import { Box } from "native-base";
 import React from "react";
 import { SvgXml } from 'react-native-svg';
 
@@ -6,9 +7,11 @@ const xml = `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="
 </svg>`
 
 
-export default function Share () {
+export default function Share (props) {
     return (
+      <Box {...props}>
         <SvgXml xml={xml} width="100%" height="100%" />
+        </Box>
       )
 }
 

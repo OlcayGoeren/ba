@@ -1,3 +1,4 @@
+import { Box } from "native-base";
 import React from "react";
 import { SvgXml } from 'react-native-svg';
 
@@ -13,9 +14,12 @@ const xml = `<svg width="4" height="16" viewBox="0 0 4 16" fill="none" xmlns="ht
 </svg>`
 
 
-export default function More () {
+
+export default function More (props) {
     return (
-        <SvgXml xml={xml} width="100%" height="100%" />
+      <Box {...props}>
+        <SvgXml  xml={xml} width="100%" height="100%" />
+        </Box>
       )
 }
 

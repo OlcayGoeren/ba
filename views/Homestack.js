@@ -7,7 +7,6 @@ import { View } from 'react-native';
 
 
 export default function Homestack({ navigation }) {
-    const theme = useTheme().colors.main
 
     return (
         <Box position="relative" h="100%" w="100%" bg="main.bg" safeAreaTop justifyContent="space-between">
