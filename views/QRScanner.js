@@ -5,48 +5,101 @@ import {
   Button,
   Center,
   Text,
-  useTheme,
   Actionsheet,
   useDisclose,
 } from 'native-base';
 
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import QRCodeScanner from 'react-native-qrcode-scanner';
 import {Pressable} from 'react-native';
 import jwt_decode from 'jwt-decode';
 import {launchImageLibrary} from 'react-native-image-picker';
 import RNQRGenerator from 'rn-qr-generator';
-import My_Table from '../components/My_Table';
+import My_new_Table from '../components/My_new_Table';
 
 import My_Req_Gallery_Button from '../components/My_Req_Gallery_Button';
-import { DataContext } from '../context';
+import {DataContext} from '../context';
 
 const STORAGE_KEY = 'Prodcuts';
 
 export default function QRScanner({navigation}) {
+
+  const {saveData} = useContext(DataContext);
+
+  // const saveData = dataContext.saveData;
   const {isOpen, onOpen, onClose} = useDisclose();
+
   const [cameraOn, setCameraOn] = useState(true);
-  const [jwt, setJwt] = useState({});
   const [loading, setLoading] = useState(false);
+  const [bodyColumns, setBodyColumns] = useState([]);
+  const [pickerResponse, setPickerResponse] = useState(null);
 
+  const headerC = [
+    <Box key="0" w="50%" p="3" borderColor="black" borderRightWidth="1">
+      <Text bold="true" w="100%" fontSize="md" color="main.accent">
+        Attribut
+      </Text>
+    </Box>,
+    <Box key="1" w="50%" p="3">
+      <Text bold="true" w="100%" fontSize="md" color="main.accent">
+        Wert
+      </Text>
+    </Box>,
+  ];
 
-  const dataContext = useContext(DataContext)
+  const bodyRowStyle = {
+    minH: '8%',
+  };
 
-  const saveData = dataContext.saveData
-
+  const headerRowStyle = {
+    borderTopRadius: '10',
+    bg: 'main.table.header',
+    borderBottomColor: 'black',
+    borderBottomWidth: '3px',
+  };
+  
   function onSuccess(e) {
     setLoading(true);
     const decoded = jwt_decode(e.hasOwnProperty('data') ? e.data : e);
-    setJwt(decoded);
-    saveData( STORAGE_KEY ,{data: new Date(), value: decoded});
+    saveData(STORAGE_KEY, {date: new Date(), value: decoded});
     setCameraOn(false);
+
+    const data = Object.entries(decoded);
+
+    setBodyColumns(() => {
+      return data.map((row, colIdx) => {
+        return row.map((value, idx) => {
+          return (
+            <Box
+              key={idx}
+              w="50%"
+              p="3"
+              borderColor="black"
+              borderRightWidth="1"
+              flexDirection="row"
+              flexGrow="1"
+              borderColor="black"
+              borderRightWidth={idx % 2 == 0 ? '1' : '0'}
+              justifyContent="space-between"
+              position="relative">
+              <Text
+                fontSize="sm"
+                color="main.text_gray"
+                flexWrap="wrap"
+                maxH="100%"
+                h="100%">
+                {value}
+              </Text>
+            </Box>
+          );
+        });
+      });
+    });
+
     onOpen();
     setTimeout(() => {
       setLoading(false);
     }, 1000);
   }
-
-  const [pickerResponse, setPickerResponse] = useState(null);
 
   const onImageLibraryPress = () => {
     setCameraOn(false);
@@ -68,7 +121,7 @@ export default function QRScanner({navigation}) {
           const {values} = response; // Array of detected QR code values. Empty if nothing found.
           setLoading(true);
           onSuccess(values[0]);
-          setCameraOn(true);
+          // setCameraOn(true);
         })
         .catch(error => {
           alert('QR-Code konnte nicht ausgelesen werden.');
@@ -77,52 +130,6 @@ export default function QRScanner({navigation}) {
         });
     }
   }, [pickerResponse]);
-
-  const headerStyle = {
-    hstack: {
-      borderTopRadius: '10',
-      bg: 'main.table.header',
-      h: '8%',
-      borderBottomColor: 'black',
-      borderBottomWidth: '3px',
-    },
-    box: {
-      w: '50%',
-      p: '3',
-      borderColor: 'black',
-      borderRightWidth: '1',
-      height: '100%',
-    },
-    text: {
-      bold: true,
-      w: '100%',
-      h: '100%',
-      fontSize: 'md',
-      color: 'main.accent',
-    },
-  };
-
-  const cellStyle = {
-    hstack: {
-      bg: ['main.table.fst', 'main.table.scd'],
-      minH: '8%',
-    },
-    box: {
-      w: '50%',
-      p: '3',
-      borderColor: 'black',
-      borderRightWidth: '1',
-      flexDirection: 'row',
-      flexGrow: '1',
-    },
-    text: {
-      fontSize: 'md',
-      color: 'main.text_gray',
-      flexWrap: 'wrap',
-      maxH: '100%',
-      h: '100%',
-    },
-  };
 
   return (
     <Box
@@ -192,12 +199,15 @@ export default function QRScanner({navigation}) {
             setCameraOn(true);
           }}>
           <Actionsheet.Content bg="main.bg">
-            <My_Table
-              tableData={Object.entries(jwt)}
-              cellHeaders={['Attribut', 'Wert']}
-              headerStyle={headerStyle}
-              cellBodyStyles={cellStyle}
-            />
+            <Box alignItems="center" justifyContent="center">
+              <My_new_Table
+                header_columns={headerC}
+                body_columns={bodyColumns}
+                headerRowStyle={headerRowStyle}
+                bodyRowStyle={bodyRowStyle}
+                bgs={['main.table.fst', 'main.table.scd']}
+              />
+            </Box>
           </Actionsheet.Content>
         </Actionsheet>
       </Box>

@@ -6,9 +6,6 @@ export default My_Button = (props) => {
   const [title, setTitle] = useState(props.title)
 
   return (
-
-
-
     <Button
       style={{ padding: '10%', alignSelf: 'center' }}
       onPress={() => props.click()}

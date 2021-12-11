@@ -13,7 +13,8 @@ import History from './assets/History';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import QRScanner from './views/QRScanner';
 import History_Stack from './views/History_Stack';
-import {DataContext, DataProvider} from './context';
+import {DataProvider} from './context';
+import GuidethroughNavigation from './navigation/GuidethroughNavigation';
 
 const STORAGE_KEY = 'optin';
 
@@ -24,9 +25,10 @@ export default function App() {
   const readData = async () => {
     try {
       const optin2 = await AsyncStorage.getItem(STORAGE_KEY);
-
+      console.log(optin2)
       if (optin2 !== null) {
-        setOptin(JSON.parse(optin2));
+        // JSON.parse(optin2)
+        setOptin(true);
       }
     } catch (e) {
       alert('Failed to fetch the data from storage');
@@ -95,24 +97,25 @@ export default function App() {
         <NativeBaseProvider theme={theme}>
           {read ? (
             !optin ? (
-              <Stack.Navigator initialRouteName="Guidethrough_welcome">
-                <Stack.Screen
-                  options={{headerShown: false}}
-                  name="Guidethrough_welcome"
-                  component={Guidethrough_welcome}
-                />
-                <Stack.Screen
-                  options={{headerShown: false}}
-                  name="Guidethrough_Validate"
-                  component={Guidethrough_Validate}
-                />
-                <Stack.Screen
-                  options={{headerShown: false}}
-                  name="Guidethrough_History"
-                  component={Guidethrough_History}
-                  initialParams={{changeLogin: saveData}}
-                />
-              </Stack.Navigator>
+              <GuidethroughNavigation/>
+              // <Stack.Navigator initialRouteName="Guidethrough_welcome">
+              //   <Stack.Screen
+              //     options={{headerShown: false}}
+              //     name="Guidethrough_welcome"
+              //     component={Guidethrough_welcome}
+              //   />
+              //   <Stack.Screen
+              //     options={{headerShown: false}}
+              //     name="Guidethrough_Validate"
+              //     component={Guidethrough_Validate}
+              //   />
+              //   <Stack.Screen
+              //     options={{headerShown: false}}
+              //     name="Guidethrough_History"
+              //     component={Guidethrough_History}
+              //     initialParams={{changeLogin: saveData}}
+              //   />
+              // </Stack.Navigator>
             ) : (
               <Tab.Navigator
                 screenOptions={{

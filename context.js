@@ -5,8 +5,8 @@ import uuid from 'react-native-uuid';
 export const DataContext = React.createContext();
 
 export function DataProvider({children}) {
-  const STORAGE_KEY = 'Prodcuts';
   const [data, setData] = useState([]);
+  const [completedTutorial, setCompletedTutorial ] = useState(null)
 
   const readData = async (STORAGE_KEY, setter) => {
     try {
@@ -17,7 +17,6 @@ export function DataProvider({children}) {
       json.forEach(ele => {
         console.log(ele._id);
       });
-      // console.log(json[0])
     } catch (e) {
       console.log('e');
       alert('Failed to fetch the data from storageee');
@@ -59,12 +58,13 @@ export function DataProvider({children}) {
   };
 
   useEffect(() => {
-    readData(STORAGE_KEY, setData);
+    readData("Products", setData);
   }, []);
 
-  useEffect(() => {
-    console.log(data.length);
-  }, [data]);
+  const idk = (set, get) => {
+  
+  }
+
 
   return (
     <DataContext.Provider value={{data, saveData, removeValue}}>

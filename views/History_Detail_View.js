@@ -102,11 +102,6 @@ export default function History_Detail_View({navigation, route}) {
     });
   }, []);
 
-  useEffect(() => {
-    console.log('first');
-    console.log(imageUri);
-  }, [imageUri]);
-
   async function pressed(e) {
     const shareOptions = {
       title: 'Share file',
