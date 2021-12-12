@@ -1,4 +1,4 @@
-import React, {useContext, useEffect, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   ArrowBackIcon,
   Box,
@@ -8,28 +8,22 @@ import {
   Center,
   Image,
 } from 'native-base';
-import My_header from '../components/My_header';
-import My_new_table from '../components/My_new_Table';
-import ShareIcon from '../assets/Share';
-import Bin from '../assets/Bin';
+import My_header from '../../components/My_header';
+import My_new_table from '../../components/My_new_Table';
+import ShareIcon from '../../assets/Share';
+import Bin from '../../assets/Bin';
 import RNQRGenerator from 'rn-qr-generator';
-
+import useStore from '../../store/useStore';
 import Share from 'react-native-share';
-import { DataContext } from '../context';
-
-const STORAGE_KEY = 'Prodcuts';
 
 export default function History_Detail_View({navigation, route}) {
-
-  const dataContext = useContext(DataContext)
-  const removeValue = dataContext.removeValue
+  const removeProducts = useStore(state => state.removeProducts);
   const [bodyColumns, setBodyColumns] = useState([]);
-
   const [imageUri, setImageUri] = useState('');
 
   const headerRowStyle = {
     borderTopRadius: '10',
-    bg: 'main.table.header',
+    bg: 'table.header',
     borderBottomColor: 'black',
     borderBottomWidth: '3px',
   };
@@ -52,12 +46,12 @@ export default function History_Detail_View({navigation, route}) {
 
   const headerC = [
     <Box key="0" w="50%" p="3" borderColor="black" borderRightWidth="1">
-      <Text bold="true" w="100%" fontSize="md" color="main.accent">
+      <Text bold="true" w="100%" fontSize="md" color="accent">
         Attribut
       </Text>
     </Box>,
     <Box key="1" w="50%" p="3">
-      <Text bold="true" w="100%" fontSize="md" color="main.accent">
+      <Text bold="true" w="100%" fontSize="md" color="accent">
         Wert
       </Text>
     </Box>,
@@ -89,7 +83,7 @@ export default function History_Detail_View({navigation, route}) {
               position="relative">
               <Text
                 fontSize="sm"
-                color="main.text_gray"
+                color="text_gray"
                 flexWrap="wrap"
                 maxH="100%"
                 h="100%">
@@ -109,25 +103,22 @@ export default function History_Detail_View({navigation, route}) {
       urls: [imageUri],
     };
 
-    // If you want, you can use a try catch, to parse
-    // the share response. If the user cancels, etc.
     try {
       const ShareResponse = await Share.open(shareOptions);
-      // setResult(JSON.stringify(ShareResponse, null, 2));
     } catch (error) {
       console.log('Error =>', error);
     }
   }
 
   async function removeItem(e) {
-    await removeValue(STORAGE_KEY, route.params.idx)
+    await removeProducts(route.params.idx);
     navigation.goBack();
   }
 
   return (
     <Box
       h="100%"
-      bg="main.bg"
+      bg="bg"
       safeArea
       justifyContent="space-between"
       style={{flex: 1}}>
@@ -155,12 +146,18 @@ export default function History_Detail_View({navigation, route}) {
           body_columns={bodyColumns}
           headerRowStyle={headerRowStyle}
           bodyRowStyle={bodyRowStyle}
-          bgs={['main.table.fst', 'main.table.scd']}
+          bgs={['table.fst', 'table.scd']}
         />
       </Box>
 
       <Box ml="4" mr="4" flexDirection="row" justifyContent="space-between">
         <Pressable
+        w="10%"
+          justifyContent="center"
+          alignContent="center"
+          alignItems="center"
+          borderRadius="100"
+          _pressed={{bg: 'gray.600'}}
           onPress={() => {
             // navigation.goBack("History_View")
             navigation.goBack();
@@ -171,7 +168,7 @@ export default function History_Detail_View({navigation, route}) {
         <Box flexDirection="row">
           <Button
             _pressed={{bg: 'gray.600'}}
-            borderColor="main.stroke"
+            borderColor="stroke"
             borderWidth="1.5"
             shadow="custom"
             bg="#1E3E4A"
@@ -183,7 +180,7 @@ export default function History_Detail_View({navigation, route}) {
           <Button
             onPress={pressed}
             _pressed={{bg: 'gray.600'}}
-            borderColor="main.stroke"
+            borderColor="stroke"
             borderWidth="1.5"
             shadow="custom"
             bg="#1E3E4A"

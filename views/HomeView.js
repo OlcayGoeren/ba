@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Box, Center, Heading, Text, useTheme } from 'native-base';
+import { Box, Center } from 'native-base';
 import Ticket from '../assets/Ticket';
 import My_Card from '../components/My_Card';
 import My_header from '../components/My_header';
@@ -9,7 +9,7 @@ import { View } from 'react-native';
 export default function Homestack({ navigation }) {
 
     return (
-        <Box position="relative" h="100%" w="100%" bg="main.bg" safeAreaTop justifyContent="space-between">
+        <Box position="relative" h="100%" w="100%" bg="bg" safeAreaTop justifyContent="space-between">
             <My_header />
 
             <Center>

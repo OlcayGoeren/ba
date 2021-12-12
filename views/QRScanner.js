@@ -1,4 +1,4 @@
-import React, {useContext, useEffect, useState} from 'react';
+import React, { useEffect, useState} from 'react';
 import {
   ArrowBackIcon,
   Box,
@@ -17,17 +17,14 @@ import RNQRGenerator from 'rn-qr-generator';
 import My_new_Table from '../components/My_new_Table';
 
 import My_Req_Gallery_Button from '../components/My_Req_Gallery_Button';
-import {DataContext} from '../context';
+import useStore from '../store/useStore';
 
 const STORAGE_KEY = 'Prodcuts';
 
 export default function QRScanner({navigation}) {
 
-  const {saveData} = useContext(DataContext);
-
-  // const saveData = dataContext.saveData;
+  const saveProducts = useStore(state => state.saveProducts)
   const {isOpen, onOpen, onClose} = useDisclose();
-
   const [cameraOn, setCameraOn] = useState(true);
   const [loading, setLoading] = useState(false);
   const [bodyColumns, setBodyColumns] = useState([]);
@@ -35,12 +32,12 @@ export default function QRScanner({navigation}) {
 
   const headerC = [
     <Box key="0" w="50%" p="3" borderColor="black" borderRightWidth="1">
-      <Text bold="true" w="100%" fontSize="md" color="main.accent">
+      <Text bold="true" w="100%" fontSize="md" color="accent">
         Attribut
       </Text>
     </Box>,
     <Box key="1" w="50%" p="3">
-      <Text bold="true" w="100%" fontSize="md" color="main.accent">
+      <Text bold="true" w="100%" fontSize="md" color="accent">
         Wert
       </Text>
     </Box>,
@@ -52,7 +49,7 @@ export default function QRScanner({navigation}) {
 
   const headerRowStyle = {
     borderTopRadius: '10',
-    bg: 'main.table.header',
+    bg: 'table.header',
     borderBottomColor: 'black',
     borderBottomWidth: '3px',
   };
@@ -60,11 +57,9 @@ export default function QRScanner({navigation}) {
   function onSuccess(e) {
     setLoading(true);
     const decoded = jwt_decode(e.hasOwnProperty('data') ? e.data : e);
-    saveData(STORAGE_KEY, {date: new Date(), value: decoded});
+    saveProducts({date: new Date(), value: decoded})
     setCameraOn(false);
-
     const data = Object.entries(decoded);
-
     setBodyColumns(() => {
       return data.map((row, colIdx) => {
         return row.map((value, idx) => {
@@ -83,7 +78,7 @@ export default function QRScanner({navigation}) {
               position="relative">
               <Text
                 fontSize="sm"
-                color="main.text_gray"
+                color="text_gray"
                 flexWrap="wrap"
                 maxH="100%"
                 h="100%">
@@ -198,14 +193,14 @@ export default function QRScanner({navigation}) {
             onClose();
             setCameraOn(true);
           }}>
-          <Actionsheet.Content bg="main.bg">
+          <Actionsheet.Content bg="bg">
             <Box alignItems="center" justifyContent="center">
               <My_new_Table
                 header_columns={headerC}
                 body_columns={bodyColumns}
                 headerRowStyle={headerRowStyle}
                 bodyRowStyle={bodyRowStyle}
-                bgs={['main.table.fst', 'main.table.scd']}
+                bgs={['table.fst', 'table.scd']}
               />
             </Box>
           </Actionsheet.Content>

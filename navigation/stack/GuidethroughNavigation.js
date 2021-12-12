@@ -1,8 +1,8 @@
 import React from 'react';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import Guidethrough_welcome from '../views/Guidethrough_welcome';
-import Guidethrough_Validate from '../views/Guidethrough_Validate';
-import Guidethrough_History from '../views/Guidethrough_History';
+import Guidethrough_welcome from '../../views/guidethrough/Guidethrough_welcome';
+import Guidethrough_Validate from '../../views/guidethrough/Guidethrough_Validate';
+import Guidethrough_History from '../../views/guidethrough/Guidethrough_History';
 
 
 
@@ -26,7 +26,6 @@ export default function GuidethroughNavigation() {
             options={{headerShown: false}}
             name="Guidethrough_History"
             component={Guidethrough_History}
-            initialParams={{changeLogin: saveData}}
           />
         </Stack.Navigator>
     </>

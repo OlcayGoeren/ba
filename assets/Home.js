@@ -1,4 +1,4 @@
-import { Box } from "native-base";
+import { Box, useTheme } from "native-base";
 import React, { useState } from "react";
 import { SvgXml } from 'react-native-svg';
 
@@ -6,6 +6,7 @@ import { SvgXml } from 'react-native-svg';
 
 
 export default function Home(props) {
+  const theme = useTheme()
   const [iconColor, setIconColor] = useState(props.color)
   const xml = `<svg width="26" height="23" viewBox="0 0 26 23" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
 <g clip-path="url(#clip0_39_696)">
