@@ -15,7 +15,7 @@ export default function Homestack({ navigation }) {
             <Center>
                 <My_Card pressed={() => navigation.navigate('Guidethrough_welcome')} title="Guidethrough" more="Vergessen wie die App funktioniert? Hier kannst du es nochmal nachlesen!" style={{mb:"10%"}}  />
                 <My_Card pressed={() => navigation.navigate('Verlauf')} title="Verlauf" more="Hier kannst du alle Artikel sehen, die du bereits gescannt hast!"  style={{mb:"10%"}} />
-                <My_Card pressed={() => navigation.navigate('Kamera')} title="Kamera" more="Hier kannst du Überprüfen, ob du ein valides Produkt hast!" style={{mb:"10%"}} />
+                <My_Card pressed={() => navigation.navigate('Kamera')} title="Kamera" more="Hier kannst du Überprüfen, ob du ein valides Produkt hast!"  />
             </Center>
             <Center width="70%" height="100%" position="absolute"
                 zIndex="-1" opacity="0.1" style={{ transform: [{ rotateZ: "40deg" }] }}
