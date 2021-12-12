@@ -25,7 +25,9 @@ export default function App() {
           !optin ? (
             <GuidethroughNavigation />
           ) : (
+            <>
             <MainTabNavigation />
+            </>
           )
         ) : (
           <></>

@@ -5,10 +5,14 @@ import My_Progressbar from '../../components/My_Progressbar';
 import History from '../../assets/History';
 import Ticket from '../../assets/Ticket';
 import useStore from '../../store/useStore';
+import { useTheme } from '@react-navigation/native';
 
 
 export default function Guidethrough_History({ navigation, route }) {
-    const { updateoptin} = useStore()
+
+    const { updateoptin, optin} = useStore()
+    const theme = useTheme().colors
+    const accent = theme.accent
 
     return (
         <Box bg="bg" safeArea h="100%">
@@ -16,7 +20,7 @@ export default function Guidethrough_History({ navigation, route }) {
                 <Box mt="35">
                     <Center>
                         <HStack space="3.5">
-                            <History color="accent" w="39" h="37" />
+                            <History color='#F89132' w="39" h="37" />
                             <Heading fontSize="3xl" color="white"> VERLAUF EINSEHEN</Heading>
                         </HStack>
                     </Center>
@@ -47,7 +51,7 @@ export default function Guidethrough_History({ navigation, route }) {
                             }}
                             title="Jetzt Starten"
                             w="174" h="45" click={() => {
-                                updateoptin()
+                                optin? navigation.navigate("Start") : updateoptin()
                             }} />
                     </HStack>
                 </Center>

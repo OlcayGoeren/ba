@@ -3,6 +3,7 @@ import {Box, Text, Pressable, useTheme, ArrowForwardIcon} from 'native-base';
 import My_new_table from '../../components/My_new_Table';
 import My_header from '../../components/My_header';
 import useStore from '../../store/useStore';
+import History from '../../assets/History';
 
 
 export default function History_View({navigation, route}) {
@@ -109,7 +110,7 @@ export default function History_View({navigation, route}) {
 
   return (
     <Box bg="bg" safeArea h="100%">
-      <My_header />
+      <My_header title="Verlauf" Icon={<History width="6%" mr="5%"/>} />
 
       <Box w="100%" alignItems="center" justifyContent="center" mb="10" mt="10">
         <My_new_table

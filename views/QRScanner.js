@@ -1,4 +1,4 @@
-import React, { useEffect, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   ArrowBackIcon,
   Box,
@@ -19,11 +19,8 @@ import My_new_Table from '../components/My_new_Table';
 import My_Req_Gallery_Button from '../components/My_Req_Gallery_Button';
 import useStore from '../store/useStore';
 
-const STORAGE_KEY = 'Prodcuts';
-
 export default function QRScanner({navigation}) {
-
-  const saveProducts = useStore(state => state.saveProducts)
+  const saveProducts = useStore(state => state.saveProducts);
   const {isOpen, onOpen, onClose} = useDisclose();
   const [cameraOn, setCameraOn] = useState(true);
   const [loading, setLoading] = useState(false);
@@ -53,11 +50,11 @@ export default function QRScanner({navigation}) {
     borderBottomColor: 'black',
     borderBottomWidth: '3px',
   };
-  
+
   function onSuccess(e) {
     setLoading(true);
     const decoded = jwt_decode(e.hasOwnProperty('data') ? e.data : e);
-    saveProducts({date: new Date(), value: decoded})
+    saveProducts({date: new Date(), value: decoded});
     setCameraOn(false);
     const data = Object.entries(decoded);
     setBodyColumns(() => {

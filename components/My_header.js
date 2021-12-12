@@ -1,17 +1,20 @@
 import React, { useState } from 'react';
 import { Box, Center, Divider, Heading, useTheme} from 'native-base';
 import Home from '../assets/Home';
+import History from '../assets/History';
 
 
-export default function My_header() {
+export default function My_header({title, Icon}) {
 
     const theme = useTheme().colors
     const accent = theme.accent
+    const transformedIcon = React.cloneElement(Icon, {color: accent})
+    
     return (
         <Box bg="bg" h="8%">
             <Center h="90%" w="100%" bg="bg" flexDirection="row">
-                <Home color={accent} width="6%" mr="5%" />
-                <Heading fontSize="3xl" color="white">Start</Heading>
+                {transformedIcon}
+                <Heading fontSize="3xl" color="white">{title}</Heading>
             </Center>
             <Center>
                 <Divider bg="divider" w="90%" />

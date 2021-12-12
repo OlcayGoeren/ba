@@ -15,6 +15,7 @@ import Bin from '../../assets/Bin';
 import RNQRGenerator from 'rn-qr-generator';
 import useStore from '../../store/useStore';
 import Share from 'react-native-share';
+import History from '../../assets/History';
 
 export default function History_Detail_View({navigation, route}) {
   const removeProducts = useStore(state => state.removeProducts);
@@ -122,7 +123,7 @@ export default function History_Detail_View({navigation, route}) {
       safeArea
       justifyContent="space-between"
       style={{flex: 1}}>
-      <My_header />
+      <My_header title="Detail" Icon={<History width="6%" mr="5%"/>} />
 
       <Center>
         {imageUri.length > 3 ? (

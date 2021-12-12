@@ -14,7 +14,7 @@ export default function Guidethrough_Validate({ navigation, route }) {
                 <Box mt="35">
                     <Center>
                         <HStack space="3.5">
-                            <Camera color="accent" w="39" h="37" />
+                            <Camera color="#F89132" w="39" h="37" />
                             <Heading fontSize="3xl" color="white"> SIEGEL VALIDIEREN</Heading>
                         </HStack>
                     </Center>

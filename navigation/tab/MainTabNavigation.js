@@ -7,6 +7,8 @@ import Home from '../../assets/Home';
 import Camera from '../../assets/Camera';
 import History from '../../assets/History';
 import { useTheme } from 'native-base';
+import Guidethrough_welcome from '../../views/guidethrough/Guidethrough_welcome';
+import GuidethroughNavigation from '../stack/GuidethroughNavigation';
 
 export default function MainTabNavigation() {
   const Tab = createBottomTabNavigator();
@@ -29,7 +31,7 @@ export default function MainTabNavigation() {
         }}>
         <Tab.Screen
           name="Start"
-          component={Homestack}
+          component={GuidethroughNavigation}
           options={{
             tabBarIcon: ({size, color}) => {
               return <Home color={color} width={size} />;
@@ -50,7 +52,7 @@ export default function MainTabNavigation() {
           }}
         />
         <Tab.Screen
-          name="History_Stack"
+          name="Verlauf"
           component={History_Stack}
           options={{
             tabBarIcon: ({size, color}) => {
@@ -58,6 +60,7 @@ export default function MainTabNavigation() {
             },
           }}
         />
+        
       </Tab.Navigator>
     </>
   );
