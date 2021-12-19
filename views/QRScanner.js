@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import {
   ArrowBackIcon,
   Box,
@@ -10,7 +10,7 @@ import {
 } from 'native-base';
 
 import QRCodeScanner from 'react-native-qrcode-scanner';
-import {Pressable} from 'react-native';
+import {AccessibilityInfo, findNodeHandle, Pressable} from 'react-native';
 import jwt_decode from 'jwt-decode';
 import {launchImageLibrary} from 'react-native-image-picker';
 import RNQRGenerator from 'rn-qr-generator';
@@ -26,6 +26,8 @@ export default function QRScanner({navigation}) {
   const [loading, setLoading] = useState(false);
   const [bodyColumns, setBodyColumns] = useState([]);
   const [pickerResponse, setPickerResponse] = useState(null);
+  const [screenReaderEnabled, setScreenReaderEnabled] = useState(false);
+  const focus = useRef();
 
   const headerC = [
     <Box key="0" w="50%" p="3" borderColor="black" borderRightWidth="1">
@@ -104,6 +106,12 @@ export default function QRScanner({navigation}) {
   };
 
   useEffect(() => {
+    AccessibilityInfo.isScreenReaderEnabled().then(result =>
+      setScreenReaderEnabled(result),
+    );
+  }, []);
+
+  useEffect(() => {
     if (pickerResponse != null && !pickerResponse.hasOwnProperty('didCancel')) {
       setLoading(true);
       RNQRGenerator.detect({
@@ -123,6 +131,15 @@ export default function QRScanner({navigation}) {
     }
   }, [pickerResponse]);
 
+  useEffect(() => {
+    if (screenReaderEnabled) {
+      const reactTag = findNodeHandle(focus.current);
+      if (reactTag) {
+        AccessibilityInfo.setAccessibilityFocus(reactTag);
+      }
+    }
+  }, [screenReaderEnabled]);
+
   return (
     <Box
       h="100%"
@@ -130,15 +147,28 @@ export default function QRScanner({navigation}) {
       bg="black"
       safeAreaBottom
       justifyContent="space-between">
+      {screenReaderEnabled ? (
+        <Center ref={focus} accessible>
+          <Text
+            accessibilityHint="um den Scanvorgang zu starten"
+            color="white"
+            fontSize="lg"
+            marginTop="10%">
+            Bitte halte die Kamera vor einen QR-Code
+          </Text>
+        </Center>
+      ) : null}
+
       <Box height="90%" borderRadius="lg">
         {cameraOn ? (
-          <Box accessible accessibilityLabel='QR-Code Aufnahme'>
-          <QRCodeScanner
-            reactivate={false}
-            reactivateTimeout={2000}
-            cameraStyle={{height: '100%', borderRadius: 10}}
-            onRead={onSuccess}
-          />
+          <Box h="100%" accessible accessibilityLabel="QR-Code Aufnahme">
+            <QRCodeScanner
+              reactivate={false}
+              reactivateTimeout={2000}
+              cameraStyle={{height: '100%', borderRadius: 10}}
+              onRead={onSuccess}
+            />
+            <Center></Center>
           </Box>
         ) : (
           <> </>
@@ -180,9 +210,9 @@ export default function QRScanner({navigation}) {
         pl="5"
         pr="5">
         <Pressable
-        accessibilityRole="button"
-        accessibilityLabel='Navigiere zurück'
-        accessibilityHint='Dieser Button navigiert zur zuletzt geöffneten Ansicht'
+          accessibilityRole="button"
+          accessibilityLabel="Navigiere zurück"
+          accessibilityHint="Dieser Button navigiert zur zuletzt geöffneten Ansicht"
           _pressed={{bg: 'gray.600'}}
           onPress={() => navigation.goBack()}>
           <ArrowBackIcon color="white" />
@@ -208,13 +238,15 @@ export default function QRScanner({navigation}) {
           </Actionsheet.Content>
         </Actionsheet>
       </Box>
-      <Box bg="black" height="5%" width="100%">
-        <Center>
-          <Text color="white" fontSize="lg">
-            Bitte halte die Kamera vor einen QR-Code
-          </Text>
-        </Center>
-      </Box>
+      {screenReaderEnabled ? null : (
+        <Box bg="black" height="5%" width="100%">
+          <Center>
+            <Text color="white" fontSize="lg">
+              Bitte halte die Kamera vor einen QR-Code
+            </Text>
+          </Center>
+        </Box>
+      )}
     </Box>
   );
 }
