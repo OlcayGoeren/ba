@@ -7,6 +7,7 @@ export default My_Button = (props) => {
 
   return (
     <Button
+    accessibilityHint={props.hint}
       style={{ padding: '10%', alignSelf: 'center' }}
       onPress={() => props.click()}
       bg="accent" color="white"

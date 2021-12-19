@@ -1,3 +1,4 @@
+import { Box } from "native-base";
 import React from "react";
 import { SvgXml } from 'react-native-svg';
 
@@ -167,6 +168,6 @@ const xml = `
 `
 export default function Ticket () {
   return (
-    <SvgXml xml={xml} width="100%" height="100%" />
+    <SvgXml accessibilityElementsHidden importantForAccessibility="no-hide-descendants" xml={xml} width="100%" height="100%" />
   )
 }

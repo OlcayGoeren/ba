@@ -5,7 +5,6 @@ import My_header from '../../components/My_header';
 import useStore from '../../store/useStore';
 import History from '../../assets/History';
 
-
 export default function History_View({navigation, route}) {
   const {products, readProducts} = useStore(state => state);
 
@@ -26,7 +25,7 @@ export default function History_View({navigation, route}) {
     </Box>,
     <Box key="1" w="50%" p="3">
       <Text bold="true" w="100%" fontSize="md" color="accent">
-        Datum
+        Artikel
       </Text>
     </Box>,
   ];
@@ -39,8 +38,8 @@ export default function History_View({navigation, route}) {
   }
 
   useEffect(() => {
-    readProducts()
-  }, [])
+    readProducts();
+  }, []);
 
   useEffect(() => {
     async function loadProducts() {
@@ -49,7 +48,7 @@ export default function History_View({navigation, route}) {
           const formatted = products.map(({date, value}) => {
             date = new Date(date);
             return [
-              `${date.toLocaleDateString()}${'\n'}${date.toLocaleTimeString()}`,
+              `${date.toLocaleDateString()}${'\n'}${date.toLocaleTimeString().split(" ")[0] }`,
               `${value.Hersteller}${'\n'}${value.Modell}`,
             ];
           });
@@ -60,6 +59,7 @@ export default function History_View({navigation, route}) {
                   <Box
                     key={idx}
                     w={idx % 2 == 0 ? '33%' : '66%'}
+                    accessibilityHint={idx % 2 == 0 ? 'Datum' : 'Artikel'}
                     p="3"
                     borderColor="black"
                     borderRightWidth="1"
@@ -77,9 +77,12 @@ export default function History_View({navigation, route}) {
                       h="100%">
                       {value}
                     </Text>
-  
+
                     {idx % 2 == 1 ? (
                       <Pressable
+                        accessibilityRole="button"
+                        accessibilityLabel="Navigiere zur Detailansicht"
+                        accessibilityHint={value}
                         w="20%"
                         h="100%"
                         top="30%"
@@ -99,9 +102,8 @@ export default function History_View({navigation, route}) {
               });
             });
           });
-        }   
+        }
       } catch (e) {
-        console.log(e);
         alert('Failed to fetch the data from storagee hier?');
       }
     }
@@ -110,7 +112,7 @@ export default function History_View({navigation, route}) {
 
   return (
     <Box bg="bg" safeArea h="100%">
-      <My_header title="Verlauf" Icon={<History width="6%" mr="5%"/>} />
+      <My_header title="Verlauf" Icon={<History width="6%" mr="5%" />} />
 
       <Box w="100%" alignItems="center" justifyContent="center" mb="10" mt="10">
         <My_new_table

@@ -13,7 +13,7 @@ export default function GuidethroughNavigation() {
 
   return (
     <>
-      <Stack.Navigator initialRouteName= {optin? "Start" : "Guidethrough_welcome"} >
+      <Stack.Navigator initialRouteName= {optin? "Start" : "Guidethrough_welcome"}>
         <Stack.Screen
           options={{headerShown: false}}
           name="Guidethrough_welcome"

@@ -2,9 +2,15 @@ import React, {useState} from 'react';
 import {ArrowForwardIcon, Box, Heading, Text, Pressable} from 'native-base';
 
 export default function My_Card(props, {navigation}) {
+
+  const hint = 'Navigiere zu ' + props.title
+
+
   return (
     <Pressable
-   
+    accessible
+      accessibilityRole="button"
+      accessibilityHint={hint}
       justifyContent="center"
       alignContent="center"
       alignItems="center"
@@ -33,7 +39,6 @@ export default function My_Card(props, {navigation}) {
           right="30px"
           color="accent"
         />
-        {/* </Pressable> */}
       </Box>
     </Pressable>
   );

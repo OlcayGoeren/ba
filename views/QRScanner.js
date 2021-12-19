@@ -132,12 +132,14 @@ export default function QRScanner({navigation}) {
       justifyContent="space-between">
       <Box height="90%" borderRadius="lg">
         {cameraOn ? (
+          <Box accessible accessibilityLabel='QR-Code Aufnahme'>
           <QRCodeScanner
             reactivate={false}
             reactivateTimeout={2000}
             cameraStyle={{height: '100%', borderRadius: 10}}
             onRead={onSuccess}
           />
+          </Box>
         ) : (
           <> </>
         )}
@@ -178,6 +180,9 @@ export default function QRScanner({navigation}) {
         pl="5"
         pr="5">
         <Pressable
+        accessibilityRole="button"
+        accessibilityLabel='Navigiere zurück'
+        accessibilityHint='Dieser Button navigiert zur zuletzt geöffneten Ansicht'
           _pressed={{bg: 'gray.600'}}
           onPress={() => navigation.goBack()}>
           <ArrowBackIcon color="white" />

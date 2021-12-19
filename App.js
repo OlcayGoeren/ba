@@ -20,7 +20,7 @@ export default function App() {
 
   return (
     <NavigationContainer>
-      <NativeBaseProvider theme={theme}>
+      <NativeBaseProvider  theme={theme}>
         {read ? (
           !optin ? (
             <GuidethroughNavigation />

@@ -9,6 +9,7 @@ import History from '../../assets/History';
 import { useTheme } from 'native-base';
 import Guidethrough_welcome from '../../views/guidethrough/Guidethrough_welcome';
 import GuidethroughNavigation from '../stack/GuidethroughNavigation';
+import { AccessibilityInfo } from 'react-native';
 
 export default function MainTabNavigation() {
   const Tab = createBottomTabNavigator();
@@ -35,7 +36,7 @@ export default function MainTabNavigation() {
           options={{
             tabBarIcon: ({size, color}) => {
               return <Home color={color} width={size} />;
-            },
+            }
           }}
         />
         <Tab.Screen
