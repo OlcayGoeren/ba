@@ -79,7 +79,6 @@ export default function Guidethrough_Validate({navigation, route}) {
               hint="Navigiere zum nächsten Guidethrough Ansicht: Verlauf Einsehen"
               _text={{
                 fontSize: '15',
-                color: 'white',
                 bold: 'true',
               }}
               title="Weiter"

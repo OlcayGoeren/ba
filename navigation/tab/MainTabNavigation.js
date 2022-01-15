@@ -1,15 +1,12 @@
 import React from 'react';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-import Homestack from '../../views/HomeView';
 import QRScanner from '../../views/QRScanner';
 import History_Stack from '../stack/History_Stack';
 import Home from '../../assets/Home';
 import Camera from '../../assets/Camera';
 import History from '../../assets/History';
 import { useTheme } from 'native-base';
-import Guidethrough_welcome from '../../views/guidethrough/Guidethrough_welcome';
 import GuidethroughNavigation from '../stack/GuidethroughNavigation';
-import { AccessibilityInfo } from 'react-native';
 
 export default function MainTabNavigation() {
   const Tab = createBottomTabNavigator();
@@ -22,6 +19,7 @@ export default function MainTabNavigation() {
   return (
     <>
       <Tab.Navigator
+      initialRouteName='GuidethroughNavigation'
         screenOptions={{
           headerShown: false,
           tabBarActiveTintColor: accent,

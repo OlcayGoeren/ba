@@ -29,7 +29,8 @@
     "react-native-svg": "^12.1.1",
     "react-native-table-component": "^1.2.1",
     "react-native-uuid": "^2.0.1",
-    "rn-qr-generator": "^1.2.0"
+    "rn-qr-generator": "^1.2.0",
+    "zustand": "^3.6.8"
   },
   "devDependencies": {
     "@babel/core": "7.16.0",

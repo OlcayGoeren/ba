@@ -14,7 +14,7 @@ export default My_Button = (props) => {
       _pressed={{ bg: "gray.600" }}
       _text={{
         fontSize: "2xl",
-        color: "white"
+        color: "#373737"
       }}
       {...props}
     >
