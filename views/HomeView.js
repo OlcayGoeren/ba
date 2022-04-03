@@ -10,7 +10,7 @@ import { useTheme } from '@react-navigation/native';
 
 export default function Homestack({ navigation }) {
     return (
-        <Box  accessibilityLabel='Start Ansicht' position="relative" h="100%" w="100%" bg="bg" safeAreaTop justifyContent="space-between">
+        <Box  accessibilityLabel='Ansicht' position="relative" h="100%" w="100%" bg="bg" safeAreaTop justifyContent="space-between">
             {/* Role label acessible */}
             <My_header title="Start" Icon={<Home  width="6%" mr="5%"/>} />
             <Center>

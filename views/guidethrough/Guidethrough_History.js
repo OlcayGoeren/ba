@@ -81,7 +81,6 @@ export default function Guidethrough_History({navigation, route}) {
             <My_Button
               _text={{
                 fontSize: '15',
-                color: 'white',
                 bold: 'true',
               }}
               title="Jetzt Starten"

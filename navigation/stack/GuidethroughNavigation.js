@@ -33,7 +33,6 @@ export default function GuidethroughNavigation() {
         component={Homestack}
           name="Start"
           options={{headerShown: false}}
-         
         />
       </Stack.Navigator>
     </>
