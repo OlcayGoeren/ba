@@ -12,10 +12,10 @@ export default function Homestack({ navigation }) {
     return (
         <Box  accessibilityLabel='Start Ansicht' position="relative" h="100%" w="100%" bg="bg" safeAreaTop justifyContent="space-between">
             {/* Role label acessible */}
-            <My_header title="Start" Icon={<Home width="6%" mr="5%"/>} />
+            <My_header title="Start" Icon={<Home  width="6%" mr="5%"/>} />
             <Center>
                 {/* Role, hint, label accessible  */}
-                <My_Card pressed={() => navigation.navigate('Guidethrough_welcome')} title="Guidethrough" more="Vergessen wie die App funktioniert? Hier kannst du es nochmal nachlesen!" style={{mb:"10%"}}  />
+                {/* <My_Card pressed={() => navigation.navigate('Guidethrough_welcome')} title="Guidethrough" more="Vergessen wie die App funktioniert? Hier kannst du es nochmal nachlesen!" style={{mb:"10%"}}  /> */}
                 <My_Card pressed={() => navigation.navigate('Verlauf')} title="Verlauf" more="Hier kannst du alle Artikel sehen, die du bereits gescannt hast!"  style={{mb:"10%"}} />
                 <My_Card pressed={() => navigation.navigate('Kamera')} title="Kamera" more="Hier kannst du Überprüfen, ob du ein valides Produkt hast!"  />
             </Center>

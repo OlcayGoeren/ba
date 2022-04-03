@@ -154,6 +154,7 @@ export default function History_Detail_View({navigation, route}) {
       <Box ml="4" mr="4" flexDirection="row" justifyContent="space-between">
         <Pressable
         w="10%"
+        accessibilityLabel='Go back'
           justifyContent="center"
           alignContent="center"
           alignItems="center"

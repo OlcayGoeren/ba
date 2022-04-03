@@ -7,10 +7,20 @@ import {
   Text,
   Actionsheet,
   useDisclose,
+  CloseIcon,
+  HStack,
+  Heading,
 } from 'native-base';
 
 import QRCodeScanner from 'react-native-qrcode-scanner';
-import {AccessibilityInfo, findNodeHandle, Pressable} from 'react-native';
+import {
+  AccessibilityInfo,
+  Alert,
+  findNodeHandle,
+  Platform,
+  Pressable,
+  UIManager,
+} from 'react-native';
 import jwt_decode from 'jwt-decode';
 import {launchImageLibrary} from 'react-native-image-picker';
 import RNQRGenerator from 'rn-qr-generator';
@@ -28,6 +38,7 @@ export default function QRScanner({navigation}) {
   const [pickerResponse, setPickerResponse] = useState(null);
   const [screenReaderEnabled, setScreenReaderEnabled] = useState(false);
   const focus = useRef();
+  const secondFocus = useRef();
 
   const headerC = [
     <Box key="0" w="50%" p="3" borderColor="black" borderRightWidth="1">
@@ -53,46 +64,56 @@ export default function QRScanner({navigation}) {
     borderBottomWidth: '3px',
   };
 
+  const createTwoButtonAlert = title =>
+    Alert.alert(title, '', [
+      {text: 'OK', onPress: () => console.log('OK Pressed')},
+    ]);
+
   function onSuccess(e) {
     setLoading(true);
-    const decoded = jwt_decode(e.hasOwnProperty('data') ? e.data : e);
-    saveProducts({date: new Date(), value: decoded});
-    setCameraOn(false);
-    const data = Object.entries(decoded);
-    setBodyColumns(() => {
-      return data.map((row, colIdx) => {
-        return row.map((value, idx) => {
-          return (
-            <Box
-              key={idx}
-              w="50%"
-              p="3"
-              borderColor="black"
-              borderRightWidth="1"
-              flexDirection="row"
-              flexGrow="1"
-              borderColor="black"
-              borderRightWidth={idx % 2 == 0 ? '1' : '0'}
-              justifyContent="space-between"
-              position="relative">
-              <Text
-                fontSize="sm"
-                color="text_gray"
-                flexWrap="wrap"
-                maxH="100%"
-                h="100%">
-                {value}
-              </Text>
-            </Box>
-          );
+    try {
+      const decoded = jwt_decode(e.hasOwnProperty('data') ? e.data : e);
+      saveProducts({date: new Date(), value: decoded});
+      setCameraOn(false);
+      const data = Object.entries(decoded);
+      setBodyColumns(() => {
+        return data.map((row, colIdx) => {
+          return row.map((value, idx) => {
+            return (
+              <Box
+                key={idx}
+                w="50%"
+                p="3"
+                borderColor="black"
+                borderRightWidth="1"
+                flexDirection="row"
+                flexGrow="1"
+                borderColor="black"
+                borderRightWidth={idx % 2 == 0 ? '1' : '0'}
+                justifyContent="space-between"
+                position="relative">
+                <Text
+                  fontSize="sm"
+                  color="text_gray"
+                  flexWrap="wrap"
+                  maxH="100%"
+                  h="100%">
+                  {value}
+                </Text>
+              </Box>
+            );
+          });
         });
       });
-    });
-
-    onOpen();
-    setTimeout(() => {
+      onOpen();
+      AccessibilityInfo.announceForAccessibility("Validation Erfolgreich! Bewege dich nach unten um Produktinformationen zu erhalten")
+      setTimeout(() => {
+        setLoading(false);
+      }, 2000);
+    } catch (error) {
       setLoading(false);
-    }, 1000);
+      createTwoButtonAlert('Validierung Fehlgeschlagen!');
+    }
   }
 
   const onImageLibraryPress = () => {
@@ -131,6 +152,7 @@ export default function QRScanner({navigation}) {
     }
   }, [pickerResponse]);
 
+
   useEffect(() => {
     if (screenReaderEnabled) {
       const reactTag = findNodeHandle(focus.current);
@@ -146,17 +168,20 @@ export default function QRScanner({navigation}) {
       w="100%"
       bg="black"
       safeAreaBottom
-      justifyContent="space-between">
+      justifyContent="space-between"
+      >
       {screenReaderEnabled ? (
-        <Center ref={focus} accessible>
-          <Text
-            accessibilityHint="um den Scanvorgang zu starten"
-            color="white"
-            fontSize="lg"
-            marginTop="10%">
-            Bitte halte die Kamera vor einen QR-Code
-          </Text>
-        </Center>
+        isOpen ? null : (
+          <Center ref={focus} accessible>
+            <Text
+              accessibilityHint="um den Scanvorgang zu starten"
+              color="white"
+              fontSize="lg"
+              marginTop="10%">
+              Bitte halte die Kamera vor einen QR-Code
+            </Text>
+          </Center>
+        )
       ) : null}
 
       <Box height="90%" borderRadius="lg">
@@ -225,8 +250,27 @@ export default function QRScanner({navigation}) {
             onClose();
             setCameraOn(true);
           }}>
-          <Actionsheet.Content bg="bg">
-            <Box alignItems="center" justifyContent="center">
+          <Actionsheet.Content bg="bg" w="100%">
+            <Box  h="100%" px={4}  justifyContent="space-between">
+              <HStack mb="10" justifyContent="space-between">
+                <Heading
+                  accessibilityRole="header"
+                  ref={secondFocus}
+                  color="gray.300">
+                  Validation Erfolgreich!
+                </Heading>
+                <Pressable
+                  _pressed={{bg: 'gray.600'}}
+                  accessibilityLabel='Schließe die Produktinformationen'
+                  accessibilityHint='Kehre zurück zum QR-Code Scanner'
+                  accessibilityRole="button"
+                  onPress={() => {
+                    onClose();
+                    setCameraOn(true);
+                  }}>
+                  <CloseIcon color="white" size="5" />
+                </Pressable>
+              </HStack>
               <My_new_Table
                 header_columns={headerC}
                 body_columns={bodyColumns}
