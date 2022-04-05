@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Box, Center, Heading, Text } from 'native-base';
 import My_Button from '../../components/My_Button';
 import My_Progressbar from '../../components/My_Progressbar';
@@ -6,6 +6,10 @@ import Ticket from '../../assets/Ticket';
 
 
 export default function Guidethrough_welcome({ navigation }) {
+
+  useEffect(() => {
+    console.log("hello comp")
+  })
 
   return (
     <Box bg="bg" safeArea h="100%">

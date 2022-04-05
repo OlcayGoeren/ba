@@ -5,18 +5,27 @@ import Guidethrough_Validate from '../../views/guidethrough/Guidethrough_Validat
 import Guidethrough_History from '../../views/guidethrough/Guidethrough_History';
 import Homestack from '../../views/HomeView';
 import useStore from '../../store/useStore';
+import MainTabNavigation from '../tab/MainTabNavigation';
 
 export default function GuidethroughNavigation() {
   const Stack = createNativeStackNavigator();
 
   const {optin} = useStore();
+  console.log(optin);
 
   return (
     <>
-      <Stack.Navigator initialRouteName= {optin? "Start" : "Guidethrough_welcome"}>
+      <Stack.Navigator
+        initialRouteName={optin ? 'MainTabNavigation' : 'Guidethrough_welcome'}>
         <Stack.Screen
-          options={{headerShown: false}}
           name="Guidethrough_welcome"
+          options={{
+            tabBarStyle: {
+              display: 'none',
+
+            },
+            headerShown: false,
+          }}
           component={Guidethrough_welcome}
         />
         <Stack.Screen
@@ -30,8 +39,8 @@ export default function GuidethroughNavigation() {
           component={Guidethrough_History}
         />
         <Stack.Screen
-        component={Homestack}
-          name="Start"
+          component={MainTabNavigation}
+          name="MainTabNavigation"
           options={{headerShown: false}}
         />
       </Stack.Navigator>

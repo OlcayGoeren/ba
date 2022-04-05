@@ -6,7 +6,7 @@ import Home from '../../assets/Home';
 import Camera from '../../assets/Camera';
 import History from '../../assets/History';
 import { useTheme } from 'native-base';
-import GuidethroughNavigation from '../stack/GuidethroughNavigation';
+import HomeView from '../../views/HomeView';
 
 export default function MainTabNavigation() {
   const Tab = createBottomTabNavigator();
@@ -15,11 +15,10 @@ export default function MainTabNavigation() {
   const gray = theme.gray[500]
   const bg = theme.bg
 
-  
   return (
     <>
       <Tab.Navigator
-      initialRouteName='GuidethroughNavigation'
+      initialRouteName='HomeView'
         screenOptions={{
           headerShown: false,
           tabBarActiveTintColor: accent,
@@ -30,11 +29,13 @@ export default function MainTabNavigation() {
         }}>
         <Tab.Screen
           name="Start"
-          component={GuidethroughNavigation}
+          component={HomeView}
           options={{
+            headerShown:false,
             tabBarIcon: ({size, color}) => {
               return <Home color={color} width={size} />;
-            }
+            },
+            
           }}
         />
         <Tab.Screen

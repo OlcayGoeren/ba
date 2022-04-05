@@ -1,9 +1,10 @@
 import React, {useState, useEffect} from 'react';
-import {NativeBaseProvider, extendTheme} from 'native-base';
+import {NativeBaseProvider, extendTheme, Stack} from 'native-base';
 import {NavigationContainer} from '@react-navigation/native';
 import useStore from './store/useStore';
 import MainTabNavigation from './navigation/tab/MainTabNavigation';
 import customTheme from './style/customTheme';
+import GuidethroughNavigation from './navigation/stack/GuidethroughNavigation';
 
 export default function App() {
   const {optin, readOptin} = useStore();
@@ -21,7 +22,8 @@ export default function App() {
     <NavigationContainer>
       <NativeBaseProvider  theme={theme}>
         {read ? (
-          <MainTabNavigation/>
+          // <MainTabNavigation/>
+          <GuidethroughNavigation/>
         ) 
         : (
           <></>

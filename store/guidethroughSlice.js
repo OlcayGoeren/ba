@@ -7,7 +7,7 @@ const guidethroughSlice = (set, get) => ({
     try {
       const result = await AsyncStorage.getItem(STORAGE_KEY);
       if (result !== null) {
-        set(prev => ({optin: JSON.parse(result)}));
+        // set(prev => ({optin: JSON.parse(result)}));
       }
     } catch (e) {
       alert('Failed to fetch the data from storage');

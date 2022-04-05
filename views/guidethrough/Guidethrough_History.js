@@ -86,8 +86,13 @@ export default function Guidethrough_History({navigation, route}) {
               title="Jetzt Starten"
               w="174"
               h="45"
-              click={() => {
-                optin ? navigation.navigate('Start') : updateoptin();
+              click={() => { 
+                if (optin) {
+                  navigation.navigate('MainTabNavigation')
+                } else {
+                  updateoptin()
+                  navigation.navigate('MainTabNavigation')
+                }
               }}
             />
           </HStack>
